@@ -62,7 +62,7 @@ class Lover(telepot.helper.ChatHandler):
     def on_chat_message(self, msg):
         content_type, chat_type, chat_id = telepot.glance(msg)
         if (content_type == 'text') and (str(chat_id) in allowed_chat_ids):
-            command = msg['text']
+            command = msg['text'].lower()
             print(command)
 
             ### GENERIC METHODS ###
