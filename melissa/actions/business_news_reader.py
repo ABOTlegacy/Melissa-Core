@@ -41,7 +41,7 @@ news_details_list_small = [
 news_dictionary = dict(zip(news_headlines_list_small, news_details_list_small))
 
 
-def news_reader(text):
+def news_reader(text, chat_id):
     for key, value in news_dictionary.items():
-        tts('Headline, ' + key)
-        tts('News, ' + value)
+        tts('Headline, ' + key, chat_id)
+        tts('News, ' + value, chat_id)
