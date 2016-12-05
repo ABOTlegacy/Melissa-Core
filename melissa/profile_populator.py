@@ -66,25 +66,8 @@ def profile_populator():
 
     telegram_username = raw_input('Your username at Telegram: ')
     if empty(telegram_username):
-        telegram_username = 'tanay1337'
+        telegram_username = ''
 
-    while(True):
-        music_path = raw_input('Path to your music directory: ')
-        if empty(music_path):
-            music_path = '.'
-            break
-        if os.path.isdir(music_path):
-            break
-        print('Invalid input, please enter a valid directory path or <ENTER>.')
-
-    while(True):
-        images_path = raw_input('Path to your images directory: ')
-        if empty(images_path):
-            images_path = '.'
-            break
-        if os.path.isdir(images_path):
-            break
-        print('Invalid input, please enter a valid directory path or <ENTER>.')
 
     city_name = raw_input('Name of city where you live: ')
     if empty(city_name):
@@ -128,20 +111,9 @@ the city of your choice: ')
         print('Invalid input, please enter(c)elsius, (f)ahrenheit) or' +
               '<ENTER > .')
 
-    gmail_address = raw_input('Enter your gmail address (???@gmail.com): ')
-    gmail_password = ''
-    if len(gmail_address) > 0:
-        gmail_password = getpass()
+    tts = 'telegram'
 
-    icloud_username = raw_input(
-        'Enter your icloud username/address (???@???.com): ')
-    icloud_password = ''
-    if len(icloud_username) > 0:
-        icloud_password = getpass()
-
-    tts = 'xxxx'
-
-    hotword_detection = 'on'
+    hotword_detection = 'off'
 
     access_key = 'xxxx'
     secret_key = 'xxxx'
@@ -174,8 +146,6 @@ the city of your choice: ')
         'hotword_detection': hotword_detection,
         'telegram_username': telegram_username,
         'telegram_token': telegram_token,
-        'music_path': music_path,
-        'images_path': images_path,
         'city_name': city_name,
         'city_code': city_code,
         'degrees': degrees,
@@ -185,27 +155,9 @@ the city of your choice: ')
             'lm': lm,
             'dic': dic
         },
-        'twitter': {
-            'access_token': access_token,
-            'access_token_secret': access_token_secret,
-            'consumer_key': consumer_key,
-            'consumer_secret': consumer_secret
-        },
-        'imgur': {
-            'client_id': client_id,
-            'client_secret': client_secret
-        },
         'ivona': {
             'access_key': access_key,
             'secret_key': secret_key
-        },
-        'gmail': {
-            'address': gmail_address,
-            'password': gmail_password
-        },
-        'icloud': {
-            'username': icloud_username,
-            'password': icloud_password
         },
         'modules': modules,
         'actions_db_file': actions_db_file,
