@@ -15,7 +15,7 @@ from configobj import ConfigObj
 data = load_profile(True)
 
 # thread-safe dict
-propose_records = telepot.helper.SafeDict()  
+propose_records = telepot.helper.SafeDict()
 
 # Get command line args
 parser = argparse.ArgumentParser()
@@ -89,7 +89,7 @@ class Lover(telepot.helper.ChatHandler):
             elif command == '/sleep':
                 bot.sendMessage(chat_id, 'Goodnight')
             else:
-                query(command, chat_id)
+                query(command, bot, chat_id)
 
         ### ELSE NOT TEXT ###
         elif (content_type == 'location') and (str(chat_id) in allowed_chat_ids):

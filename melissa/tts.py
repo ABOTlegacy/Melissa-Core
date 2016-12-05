@@ -10,7 +10,7 @@ from telepot.delegate import (per_chat_id, create_open, pave_event_space, includ
 import profile
 
 
-def tts(message, chat_id):
+def tts(message, bot, chat_id):
     """
     This function takes a message as an argument and converts it to
     speech depending on the OS.
@@ -25,7 +25,6 @@ def tts(message, chat_id):
             tts_engine.voice_name = 'Joey'
         tts_engine.speak(message)
     elif profile.data['tts'] == 'telegram':
-        bot = telepot.Bot(bot_token)
         bot.sendMessage(chat_id, message)
     else:
         if sys.platform == 'darwin':

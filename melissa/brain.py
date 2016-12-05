@@ -6,7 +6,7 @@ import actions_db
 order_match_factor = 1.5
 
 
-def query(text, chat_id):
+def query(text, bot, chat_id):
     """
     Processes the text against the words.sqlite DB to identify
     which module and function can be best applied.
@@ -150,7 +150,7 @@ def query(text, chat_id):
             print "Run function " + rows[0][0]
             module_name, function = rows[0][0].split()
             # run function
-            getattr(actions_db.modules[module_name], function)(text, chat_id)
+            getattr(actions_db.modules[module_name], function)(text, bot, chat_id)
 
         else:
             print top_scores
@@ -159,7 +159,7 @@ def query(text, chat_id):
                      top_scores[0]['score'])
             module_name, function = top_scores[0]['function'].split()
             # run function
-            getattr(actions_db.modules[module_name], function)(text, chat_id)
+            getattr(actions_db.modules[module_name], function)(text, bot, chat_id)
 
     else:
         # If there are no matched multiple-word groups, get a
@@ -185,7 +185,7 @@ def query(text, chat_id):
                   % (rows[0][0], rows[0][1], rows[0][2])
             module_name, function = rows[0][0].split()
             # run function
-            getattr(actions_db.modules[module_name], function)(text, chat_id)
+            getattr(actions_db.modules[module_name], function)(text, bot, chat_id)
 
         elif len(rows) > 1:
             if rows[0][1] == rows[1][1] \
@@ -206,10 +206,10 @@ def query(text, chat_id):
             print "Run function " + rows[0][0]
             module_name, function = rows[0][0].split()
             # run function
-            getattr(actions_db.modules[module_name], function)(text, chat_id)
+            getattr(actions_db.modules[module_name], function)(text, bot, chat_id)
 
         else:
             # If there are no single word or multiple word matches,
             # provide the 'I dont know what that means!' message.
             getattr(actions_db.modules['general_conversations'],
-                    'undefined')('', chat_id)
+                    'undefined')('', bot, chat_id)

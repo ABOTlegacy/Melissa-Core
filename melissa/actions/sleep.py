@@ -9,9 +9,9 @@ WORDS = {'go_to_sleep': {'groups': ['sleep', 'bye', 'deactivate', 'stop',
          ['good', 'bye']]}}
 
 
-def go_to_sleep(text, chat_id):
+def go_to_sleep(text, bot, chat_id):
     replies = ['See you later!', 'Just call my name and I\'ll be there!']
-    tts(random.choice(replies), chat_id)
+    tts(random.choice(replies), bot, chat_id)
 
     if profile.data['hotword_detection'] == 'on':
         print('\nListening for Keyword...')
