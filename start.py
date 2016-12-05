@@ -1,5 +1,6 @@
 import sys
 import subprocess
+import argparse
 from melissa.profile_loader import load_profile
 from melissa.tts import tts
 #from melissa.stt import stt
@@ -8,12 +9,23 @@ import telepot
 import telepot.helper
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 from telepot.delegate import (per_chat_id, create_open, pave_event_space, include_callback_query_chat_id)
+from configobj import ConfigObj
 
 # Melissa Profile
 data = load_profile(True)
 
 # thread-safe dict
 propose_records = telepot.helper.SafeDict()  
+
+# Get command line args
+parser = argparse.ArgumentParser()
+parser.add_argument("config", help="full path to config file", type=str)
+args = parser.parse_args()
+config_file = args.config
+
+# Read Config File
+config = ConfigObj(config_file, file_error=True)
+bot_token = config['bot_token']
 
 class Lover(telepot.helper.ChatHandler):
     keyboard = InlineKeyboardMarkup(inline_keyboard=[[
@@ -54,7 +66,7 @@ class Lover(telepot.helper.ChatHandler):
 
             ### GENERIC METHODS ###
             if command == '/roll':
-                bot.sendMessage(chat_id, random.randint(1,6))
+                bot.sendMessage(chat_id, 'dice')
             elif command == '/start':
                 bot.sendMessage(chat_id, 'hola!')
             elif command == '/menu':
@@ -65,25 +77,6 @@ class Lover(telepot.helper.ChatHandler):
                 }
                 bot.sendMessage(chat_id, 'Please choose an option...',reply_markup=replymarkup)
 
-            ### CAMERA COMMANDS ###
-            elif command == '/missile':
-                replymarkup = {
-                    "keyboard": [[{"text":"/left"}, {"text":"/right"}], [{"text":"/up"}, {"text":"/down"}], [{"text":"/shoot"}]],
-                    "resize_keyboard": True,
-                    "one_time_keyboard": False
-                }
-                bot.sendMessage(chat_id, 'Please choose an option...',reply_markup=replymarkup)
-            elif command == '/left':
-                missile.run_command(command, 400)
-            elif command == '/right':
-                missile.run_command(command, 400)
-            elif command == '/up':
-                missile.run_command(command, 200)
-            elif command == '/down':
-                missile.run_command(command, 200)
-            elif command == '/shoot':
-                missile.run_command(command, 1)
-
             ### ACTION COMMANDS ###
             elif command == '/actions':
                 replymarkup = {
@@ -93,28 +86,21 @@ class Lover(telepot.helper.ChatHandler):
                 }
                 bot.sendMessage(chat_id, 'Please choose an option...',reply_markup=replymarkup)
             elif command == '/sleep':
-                service_call('media_player','turn_off',{'entity_id': 'media_player.sony_bravia_tv'})
-                service_call('light','turn_off',{'entity_id': 'light.family_room_light'})
                 bot.sendMessage(chat_id, 'Goodnight')
-            elif command == '/grocery_list':
-                bot.sendMessage(chat_id, todoist.DisplayGroceryList())
-
-
+            else:
+                query(text)
 
         ### ELSE NOT TEXT ###
         elif (content_type == 'location') and (str(chat_id) in allowed_chat_ids):
             latitude = msg['location']['latitude']
             longitude = msg['location']['longitude']
-            #bot.sendMessage(chat_id, 'LATITUDE: ' + repr(latitude) + '\nLONGITUDE: ' + repr(longitude))
-            servicedata = {'dev_id': 'abotlegacywindowsphone', 'gps': [latitude, longitude]}
-            service_call('device_tracker','see',servicedata)
             bot.sendMessage(chat_id, 'You are checked in.')
         elif (content_type == 'audio') and (str(chat_id) in allowed_chat_ids):
             mimetype = msg['audio']['mime_type']
             print(mimetype)
             bot.sendMessage(chat_id, mimetype)
         else:
-            query(text)
+            bot.sendMessage(chat_id, 'You are not allowed to chat with me.')
 
 
 
