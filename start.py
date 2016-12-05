@@ -26,6 +26,7 @@ config_file = args.config
 # Read Config File
 config = ConfigObj(config_file, file_error=True)
 bot_token = config['bot_token']
+allowed_chat_ids = config['allowed_chat_ids']
 
 class Lover(telepot.helper.ChatHandler):
     keyboard = InlineKeyboardMarkup(inline_keyboard=[[
