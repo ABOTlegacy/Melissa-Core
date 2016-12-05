@@ -89,7 +89,7 @@ class Lover(telepot.helper.ChatHandler):
             elif command == '/sleep':
                 bot.sendMessage(chat_id, 'Goodnight')
             else:
-                query(command)
+                query(command, chat_id)
 
         ### ELSE NOT TEXT ###
         elif (content_type == 'location') and (str(chat_id) in allowed_chat_ids):
