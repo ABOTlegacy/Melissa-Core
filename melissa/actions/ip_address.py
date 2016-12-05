@@ -14,7 +14,7 @@ WORDS = {
 }
 
 
-def ip_address(text):
+def ip_address(text, bot, chat_id):
     tts("Here are my available I.P. addresses.")
     for ifaceName in interfaces():
         addresses = [
@@ -27,6 +27,6 @@ def ip_address(text):
             updated_addresses = [re.sub(r"\.", r" dot ", address)
                                  for address in addresses]
             tts('%s: %s' % ("interface: " + ifaceName +
-                            ", I.P. Address ", ', '.join(updated_addresses)))
+                            ", I.P. Address ", ', '.join(updated_addresses)), bot, chat_id)
 
-    tts("Those are all my I.P. addresses.")
+    tts("Those are all my I.P. addresses.", bot, chat_id)

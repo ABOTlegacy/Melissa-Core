@@ -18,5 +18,5 @@ WORDS = {
 }
 
 
-def tell_horoscope(text):
-    tts(HoroscopeGenerator.format_sentence(HoroscopeGenerator.get_sentence()))
+def tell_horoscope(text, bot, chat_id):
+    tts(HoroscopeGenerator.format_sentence(HoroscopeGenerator.get_sentence()), bot, chat_id)

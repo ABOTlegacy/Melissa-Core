@@ -19,7 +19,7 @@ WORDS = {
 }
 
 
-def system_status(text):
+def system_status(text, bot, chat_id):
     os, name, version, _, _, _ = platform.uname()
     version = version.split('-')[0]
     cores = psutil.cpu_count()
@@ -33,11 +33,11 @@ def system_status(text):
     response += "Current CPU utilization is %s percent. " % cpu_percent
     response += "Current memory utilization is %s percent. " % memory_percent
     response += "Current disk utilization is %s percent. " % disk_percent
-    tts(response)
+    tts(response, bot, chat_id)
 
 
-def system_uptime(text):
+def system_uptime(text, bot, chat_id):
     boot_time = datetime.datetime.fromtimestamp(psutil.boot_time())
     running_since = boot_time.strftime("%A %d. %B %Y")
     response = 'System has been running since ' + running_since
-    tts(response)
+    tts(response, bot, chat_id)

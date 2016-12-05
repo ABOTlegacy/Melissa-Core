@@ -8,14 +8,14 @@ WORDS = {'define_subject': {'groups': ['define']}
          }
 
 
-def define_subject(speech_text):
+def define_subject(speech_text, bot, chat_id):
     words_of_message = speech_text.split()
     words_of_message.remove('define')
     cleaned_message = ' '.join(words_of_message).rstrip()
     if len(cleaned_message) == 0:
         msg = 'define requires subject words'
         print msg
-        tts(msg)
+        tts(msg, bot, chat_id)
         return
 
     try:
@@ -28,9 +28,9 @@ def define_subject(speech_text):
             m = regEx.match(wiki_data)
 
         wiki_data = wiki_data.replace("'", "")
-        tts(wiki_data)
+        tts(wiki_data, bot, chat_id)
     except wikipedia.exceptions.DisambiguationError as e:
         tts('Can you please be more specific? You may choose something' +
-            'from the following.')
+            'from the following.', bot, chat_id)
         print("Can you please be more specific? You may choose something" +
               "from the following; {0}".format(e))

@@ -19,19 +19,19 @@ WORDS = {
 }
 
 
-def show_all_notes(text):
+def show_all_notes(text, bot, chat_id):
     conn = sqlite3.connect(profile.data['memory_db'])
     tts('Your notes are as follows:')
 
     cursor = conn.execute("SELECT notes FROM notes")
 
     for row in cursor:
-        tts(row[0])
+        tts(row[0], bot, chat_id)
 
     conn.close()
 
 
-def note_something(speech_text):
+def note_something(speech_text, bot, chat_id):
     conn = sqlite3.connect(profile.data['memory_db'])
     words_of_message = speech_text.split()
     words_of_message.remove('note')
@@ -42,4 +42,4 @@ def note_something(speech_text):
     conn.commit()
     conn.close()
 
-    tts('Your note has been saved.')
+    tts('Your note has been saved.', bot, chat_id)

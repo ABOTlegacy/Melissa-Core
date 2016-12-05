@@ -8,7 +8,7 @@ WORDS = {'weather': {'groups': ['weather', ['how', 'weather'],
                                 ['hows', 'weather']]}}
 
 
-def weather(text):
+def weather(text, bot, chat_id):
     weather_com_result = pywapi.get_weather_from_weather_com(
         profile.data['city_code'])
 
@@ -24,4 +24,4 @@ def weather(text):
         weather_com_result['current_conditions']['text'].lower() + \
         " and " + str(temperature) + "degrees " + degrees_type + \
         " now in " + profile.data['city_name']
-    tts(weather_result)
+    tts(weather_result, bot, chat_id)
